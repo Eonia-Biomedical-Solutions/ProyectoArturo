@@ -1,0 +1,94 @@
+.padre{
+    display: flex;
+    align-items: center;
+    height: 70%;
+}
+.tamanoimagen{
+    height: 800px;
+    width: 100%;
+}
+.estiloprofile{
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.cajatexto{
+    background-color: #cccccc40;
+    border-color: slategray;
+    border-radius: 30px;
+    width: 100%;
+    padding: 15px;
+    border-width: 0px;
+    margin-bottom: 20px;
+}
+.cajatexto:focus{
+    outline: 1px solid cornflowerblue;
+    box-shadow: 0 0 10px cornflowerblue;
+}
+.botonregistro{
+    background-color: rgb(121, 4, 4);
+    border-color: rgb(121, 4, 4);
+    border-radius: 30px;
+    width: 100%;
+    padding: 15px;
+    border-width: 0px;
+    margin-bottom: 20px;
+    color: rgb(255, 255, 255);
+}
+.texto{
+    font-size: 20px;
+    color: slategray;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+}
+.botonswitch{
+    border-radius: 30px;
+    padding: 8px;
+    border-width: 0px;
+    color: brown;
+    font-size: 16px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .main {
+    display: flex;
+    flex-grow: 1;
+    padding: 1rem;
+  }
+  
+  .libros {
+    flex-grow: 1;
+  }
+  
+  .bookList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .bookItem {
+    margin: 1rem 0;
+  }
+  
+  .carrito {
+    margin-left: 2rem;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    max-width: 300px;
+  }
