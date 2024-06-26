@@ -1,15 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const cors = require('cors'); // Import the cors library
+const cors = require('cors'); 
 require('./database');
 
 const app = express();
 app.use(express.json());
 
-// Add CORS middleware with your client-side origin
 app.use(cors({
-  origin: 'http://localhost:3000' // Replace with your actual client-side origin
+  origin: 'http://localhost:3000' 
 }));
 
 const LibroSchema = new mongoose.Schema({
