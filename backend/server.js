@@ -1,40 +1,126 @@
 const express = require('express');
-const mongoose = require('mongoose');
-
-const cors = require('cors'); 
-require('./database');
+const cors = require('cors');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore, doc, setDoc, deleteDoc, updateDoc } = require('firebase-admin/firestore');
+const { getAuth } = require('firebase-admin/auth');
 
 const app = express();
-app.use(express.json());
-
 app.use(cors({
   origin: 'http://localhost:3000' 
 }));
+app.use(express.json());
 
-const LibroSchema = new mongoose.Schema({
-  titulo: { type: String, required: true },
-  autor: { type: String, required: true },
-  año: { type: Number, required: true },
-  genero: { type: String, required: true }
-}, { versionKey: false, timestamps: true });
-
-const Libro = mongoose.model('Libro', LibroSchema);
-
-// Rutas de API
-app.get('/libros', async (req, res) => {
-  const libros = await Libro.find();
-  res.json(libros);
+// Inicializa la aplicación Firebase Admin
+const serviceAccount = require('./bookstoreonline.json'); 
+initializeApp({
+  credential: cert(serviceAccount)
 });
 
+const db = getFirestore();
+const auth = getAuth();
+
+// Ruta para registrar o autenticar usuarios
+app.post('/auth', async (req, res) => {
+  const { email, password, nombre, apellido, fecha, rol } = req.body;
+
+  if (req.body.registrando) {
+    try {
+      const userRecord = await auth.createUser({
+        email: email,
+        password: password
+      });
+
+      // Guardar información adicional del usuario en Firestore
+      await setDoc(doc(db, "usuarios", userRecord.uid), {
+        email: email,
+        rol: rol,
+        nombre: nombre,
+        apellido: apellido,
+        fecha: fecha
+      });
+
+      res.status(200).send({ message: 'Usuario registrado exitosamente.' });
+    } catch (error) {
+      res.status(500).send({ error: 'Error al registrar usuario:', message: error.message });
+    }
+  } else {
+    try {
+      const user = await auth.getUserByEmail(email);
+      res.status(200).send({ message: 'Usuario autenticado exitosamente.' });
+    } catch (error) {
+      res.status(500).send({ error: 'Error al autenticar usuario:', message: error.message });
+    }
+  }
+});
+
+
+// Ruta para eliminar usuarios
+app.delete('/usuarios/:uid', async (req, res) => {
+  const uid = req.params.uid;
+
+  try {
+    const userRef = doc(db, "usuarios", uid);
+    await auth.deleteUser(uid);
+    await deleteDoc(userRef);
+
+    res.status(200).send({ message: 'Usuario eliminado exitosamente.' });
+  } catch (error) {
+    res.status(500).send({ error: 'Error al eliminar usuario:', message: error.message });
+  }
+});
+
+// Ruta para agregar libros
 app.post('/libros', async (req, res) => {
-  const nuevoLibro = new Libro(req.body);
-  await nuevoLibro.save();
-  res.status(201).json(nuevoLibro);
+  const { titulo, autor, ISBN, genero, fechaPublicacion, resumen } = req.body;
+
+  try {
+    const libroRef = doc(db, 'libros', 'id-generado-automaticamente'); // Crea una referencia al documento
+    await setDoc(libroRef, {
+      titulo: titulo,
+      autor: autor,
+      ISBN: ISBN,
+      genero: genero,
+      fechaPublicacion: fechaPublicacion,
+      resumen: resumen
+    });
+    res.status(200).send({ message: 'Libro agregado exitosamente.' });
+  } catch (error) {
+    res.status(500).send({ error: 'Error al agregar libro:', message: error.message });
+  }
 });
 
+// Ruta para modificar libros
+app.put('/libros/:id', async (req, res) => {
+  const id = req.params.id;
+  const { titulo, autor, ISBN, genero, fechaPublicacion, resumen } = req.body;
+
+  try {
+    const libroRef = doc(db, 'libros', id);
+    await updateDoc(libroRef, {
+      titulo: titulo,
+      autor: autor,
+      ISBN: ISBN,
+      genero: genero,
+      fechaPublicacion: fechaPublicacion,
+      resumen: resumen
+    });
+    res.status(200).send({ message: 'Libro actualizado exitosamente.' });
+  } catch (error) {
+    res.status(500).send({ error: 'Error al actualizar libro:', message: error.message });
+  }
+});
+
+// Ruta para eliminar libros
 app.delete('/libros/:id', async (req, res) => {
-  await Libro.findByIdAndDelete(req.params.id);
-  res.status(204).send();
+  const id = req.params.id;
+
+  try {
+    const libroRef = doc(db, 'libros', id);
+    await deleteDoc(libroRef);
+    res.status(200).send({ message: 'Libro eliminado exitosamente.' });
+  } catch (error) {
+    res.status(500).send({ error: 'Error al eliminar libro:', message: error.message });
+  }
 });
 
 // Iniciar el servidor
