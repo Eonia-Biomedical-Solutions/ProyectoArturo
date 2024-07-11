@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { initializeApp, cert } = require('firebase-admin/app');
-const { getFirestore, doc, setDoc, deleteDoc, updateDoc } = require('firebase-admin/firestore');
+const { getFirestore, doc, deleteDoc } = require('firebase-admin/firestore');
 const { getAuth } = require('firebase-admin/auth');
 
 const app = express();
@@ -53,15 +53,16 @@ app.post('/auth', async (req, res) => {
   }
 });
 
-
 // Ruta para eliminar usuarios
 app.delete('/usuarios/:uid', async (req, res) => {
   const uid = req.params.uid;
 
   try {
-    const userRef = doc(db, "usuarios", uid);
+    // Eliminar de Firestore
+    await db.collection('usuarios').doc(uid).delete();
+    
+    // Eliminar de Firebase Authentication
     await auth.deleteUser(uid);
-    await deleteDoc(userRef);
 
     res.status(200).send({ message: 'Usuario eliminado exitosamente.' });
   } catch (error) {
@@ -71,7 +72,7 @@ app.delete('/usuarios/:uid', async (req, res) => {
 
 // Ruta para agregar libros
 app.post('/libros', async (req, res) => {
-  const { titulo, autor, ISBN, genero, fechaPublicacion, resumen } = req.body;
+  const { titulo, autor, ISBN, genero, fechaPublicacion, resumen, imagen, precio } = req.body;
 
   try {
     const libroRef = doc(db, 'libros', 'id-generado-automaticamente'); // Crea una referencia al documento
@@ -81,7 +82,9 @@ app.post('/libros', async (req, res) => {
       ISBN: ISBN,
       genero: genero,
       fechaPublicacion: fechaPublicacion,
-      resumen: resumen
+      resumen: resumen,
+      imagen: imagen,
+      precio: precio
     });
     res.status(200).send({ message: 'Libro agregado exitosamente.' });
   } catch (error) {
@@ -92,7 +95,7 @@ app.post('/libros', async (req, res) => {
 // Ruta para modificar libros
 app.put('/libros/:id', async (req, res) => {
   const id = req.params.id;
-  const { titulo, autor, ISBN, genero, fechaPublicacion, resumen } = req.body;
+  const { titulo, autor, ISBN, genero, fechaPublicacion, resumen, imagen, precio } = req.body;
 
   try {
     const libroRef = doc(db, 'libros', id);
@@ -102,7 +105,9 @@ app.put('/libros/:id', async (req, res) => {
       ISBN: ISBN,
       genero: genero,
       fechaPublicacion: fechaPublicacion,
-      resumen: resumen
+      resumen: resumen,
+      imagen: imagen,
+      precio: precio
     });
     res.status(200).send({ message: 'Libro actualizado exitosamente.' });
   } catch (error) {
