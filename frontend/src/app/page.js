@@ -4,21 +4,17 @@ import appFirebase from '@/credenciales';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
-// Initialize Firebase Auth and Firestore
 const auth = getAuth(appFirebase);
 const db = getFirestore(appFirebase);
 
-// Import child components
 import Login from './components/Login';
 import HomeCliente from './components/HomeCliente';
 import HomeAdmin from './components/HomeAdmin';
 
 function App() {
-  // Declare state variables for user and role
   const [usuario, setUsuario] = useState(null);
   const [rol, setRol] = useState(null);
 
-  // useEffect hook to handle authentication state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (userFirebase) => {
       if (userFirebase) {
@@ -37,7 +33,6 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  // Render based on user authentication and role
   return (
     <div>
       {usuario ? (
@@ -48,7 +43,7 @@ function App() {
             <HomeCliente correousuario={usuario.email} />
           )
         ) : (
-          <div>Loading user role...</div>
+          <div>Loading...</div>
         )
       ) : (
         <Login />
