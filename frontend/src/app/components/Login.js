@@ -1,7 +1,6 @@
-// Login.js
-
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { PiSignInThin, PiSignOutThin } from "react-icons/pi";
 import styles from './page.module.css';
 import appFirebase from '@/credenciales';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
@@ -21,12 +20,12 @@ const Login = () => {
     e.preventDefault();
     const correo = e.target.email.value;
     const contrasena = e.target.password.value;
-  
+
     if (registrando) {
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, correo, contrasena);
         const user = userCredential.user;
-  
+
         // Save additional user information (assuming proper security rules)
         await setDoc(doc(db, "usuarios", user.uid), {
           email: correo,
@@ -35,7 +34,7 @@ const Login = () => {
           apellido: apellido,
           fecha: fecha
         });
-  
+
         console.log("User created and data saved successfully!"); // Success message
       } catch (error) {
         console.error("Error creating user:", error.message); // Log error for debugging
@@ -52,8 +51,8 @@ const Login = () => {
   };
 
   return (
-    <div className='container'>
-      <div className='row'>
+    <main className={styles.containerlogin}>
+      <div className={styles.containerlogin2}>
         <div className='col-md-4'>
           <div className={styles.padre}>
             <div className='card card-body shadow-lg'>
@@ -63,16 +62,26 @@ const Login = () => {
                 <input type='password' placeholder='Ingrese su contraseña' className={styles.cajatexto} id='password' />
                 {registrando && (
                   <>
-                    <input type='text' placeholder='Nombre' className={styles.cajatexto} value={nombre} onChange={(e) => setNombre(e.target.value)} />
-                    <input type='text' placeholder='Apellido' className={styles.cajatexto} value={apellido} onChange={(e) => setApellido(e.target.value)} />
-                    <input type='date' placeholder='Fecha de Nacimiento' className={styles.cajatexto} value={fecha} onChange={(e) => setFecha(e.target.value)} />
-                    <select value={rol} onChange={(e) => setRol(e.target.value)} className={styles.cajatexto}>
-                      <option value="cliente">Cliente</option>
-                      <option value="admin">Administrador</option>
-                    </select>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <input type='text' placeholder='Nombre' className={styles.cajatexto} value={nombre} onChange={(e) => setNombre(e.target.value)} />
+                      <input type='text' placeholder='Apellido' className={styles.cajatexto} value={apellido} onChange={(e) => setApellido(e.target.value)} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <h4 className={styles.texto2}>Fecha de nacimiento</h4>
+                      <input type='date' placeholder='Fecha de Nacimiento' className={styles.cajatexto} value={fecha} onChange={(e) => setFecha(e.target.value)} />
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <h4 className={styles.texto2}>Rol</h4>
+                      <select value={rol} onChange={(e) => setRol(e.target.value)} className={styles.cajatexto}>
+                        <option value="cliente">Cliente</option>
+                        <option value="admin">Administrador</option>
+                      </select>
+                      </div>
+                    </div>
                   </>
                 )}
-                <button className={styles.botonregistro}>{registrando ? 'Regístrate' : 'Iniciar sesión'}</button>
+                <button className={styles.botonregistro}><PiSignInThin style={{fontSize: '25px', marginRight:'8px'}}/> {registrando ? 'Regístrate' : 'Iniciar sesión'}</button>
               </form>
               <h4 className={styles.texto}>
                 {registrando ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?'}
@@ -84,10 +93,12 @@ const Login = () => {
           </div>
         </div>
         <div className='col-md-8'>
-          <img src="/assets/libros-4.jpg" className={styles.tamanoimagen} />
+          <div className={styles.contenedorimg}>
+            <img src="/assets/bookstorecover.png" className={styles.tamanoimagen} />
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
