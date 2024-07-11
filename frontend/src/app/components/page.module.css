@@ -1,94 +1,311 @@
-.padre{
-    display: flex;
-    align-items: center;
-    height: 70%;
-}
-.tamanoimagen{
-    height: 800px;
-    width: 100%;
-}
-.estiloprofile{
-    border-radius: 50%;
-    height: 120px;
-    width: 120px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-.cajatexto{
-    background-color: #cccccc40;
-    border-color: slategray;
-    border-radius: 30px;
-    width: 100%;
-    padding: 15px;
-    border-width: 0px;
-    margin-bottom: 20px;
-}
-.cajatexto:focus{
-    outline: 1px solid cornflowerblue;
-    box-shadow: 0 0 10px cornflowerblue;
-}
-.botonregistro{
-    background-color: rgb(121, 4, 4);
-    border-color: rgb(121, 4, 4);
-    border-radius: 30px;
-    width: 100%;
-    padding: 15px;
-    border-width: 0px;
-    margin-bottom: 20px;
-    color: rgb(255, 255, 255);
-}
-.texto{
-    font-size: 20px;
-    color: slategray;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 5px;
-}
-.botonswitch{
-    border-radius: 30px;
-    padding: 8px;
-    border-width: 0px;
-    color: brown;
-    font-size: 16px;
-}
+/* estilos generales */
 .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-  }
-  
-  .main {
-    display: flex;
-    flex-grow: 1;
-    padding: 1rem;
-  }
-  
-  .libros {
-    flex-grow: 1;
-  }
-  
-  .bookList {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .bookItem {
-    margin: 1rem 0;
-  }
-  
-  .carrito {
-    margin-left: 2rem;
-    padding: 1rem;
-    border: 1px solid #dee2e6;
-    background-color: #f8f9fa;
-    max-width: 300px;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  background-color: #171717;
+}
+
+
+/* estilos login */
+.padre {
+  display: flex;
+  align-items: center;
+  height: 65%;
+  width: 90%;
+  margin-left: 80px;
+}
+
+.tamanoimagen {
+  height: 100vh;
+  width: auto;
+}
+
+.estiloprofile {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.cajatexto {
+  background-color: #b7b7b740;
+  border-color: slategray;
+  border-radius: 30px;
+  width: 100%;
+  height: 80%;
+  padding: 15px;
+  border-width: 0px;
+  margin-bottom: 15px;
+}
+
+.usuariostabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usuariostabla th{
+  padding: 10px; 
+  text-align: left; 
+}
+
+.usuariostabla td {
+  border-top: 1px solid #7a7a7a; 
+  padding: 10px; 
+  text-align: left; 
+}
+
+.cajatexto:focus {
+  outline: 1px solid cornflowerblue;
+  box-shadow: 0 0 10px cornflowerblue;
+}
+
+.botonregistro {
+  background-color: rgb(121, 4, 4);
+  border-color: rgb(121, 4, 4);
+  border-radius: 30px;
+  width: 100%;
+  padding: 15px;
+  border-width: 0px;
+  margin-bottom: 20px;
+  color: rgb(255, 255, 255);
+}
+
+.texto {
+  font-size: 16px;
+  color: slategray;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 5px;
+}
+
+.texto2 {
+  font-size: 12px;
+  color: slategray;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 5px;
+}
+
+.botonswitch {
+  border-radius: 30px;
+  padding: 8px;
+  border-width: 0px;
+  color: brown;
+  font-size: 15px;
+}
+
+.containerlogin {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: rgb(11, 11, 11);
+  align-items: center;
+  vertical-align: middle;
+}
+
+.containerlogin2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+}
+
+/* estilos homecliente */
+
+.imagenlibro {
+  height: 150px;
+  width: auto;
+}
+
+.librotitulo {
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  margin: 0px;
+}
+
+.librotexto1 {
+  font-family: Arial;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+  margin: 0px
+}
+
+.librotexto2 {
+  font-family: Arial;
+  font-size: 10px;
+  text-align: left;
+}
+
+.bookList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.formAddBook input {
+  margin-bottom: 6px;
+}
+
+.EditBook {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.EditBook input {
+  margin-block: 8px;
+}
+
+.bookItem2 {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(218, 218, 218, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70vh;
+}
+
+.bookItem {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(218, 218, 218, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bookItem img {
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.btnlibro1 {
+  margin-top: 8px;
+  padding: 8px 16px;
+  background-color: #b30000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btnlibro1:hover {
+  background-color: #690000;
+}
+
+.contenedorimg {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.headercliente {
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  border-bottom: 1px solid #dee2e6;
+  justify-content: space-between;
+}
+
+.headeradmin {
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  border-bottom: 1px solid #dee2e6;
+  justify-content: space-between;
+}
+
+.headeradmin button {
+  margin-inline: 15px;
+  color: white;
+  background-color: #171717;
+  border: 0;
+  font-family: monospace;
+}
+
+.divborder {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.headerbutton {
+  background-color: #b3000000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-inline: 25px;
+}
+
+.libros {
+  flex-grow: 1;
+}
+
+.carrito {
+  margin-top: 20px;
+  margin-left: 2rem;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  width: 80vh;
+  border-radius: 15px;
+  align-self: flex-end;
+}
+
+.comprarcarrito {
+  margin-top: 8px;
+  padding: 8px 16px;
+  background-color: #b30000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.listcarrito {
+  list-style-type: none;
+  padding: 0;
+}
+
+.imgcarrito {
+  height: 50px;
+  width: auto;
+}
+
+.cajaperfil {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 2rem;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  width: 80vh;
+  border-radius: 15px;
+  align-self: flex-end;
+}
+
