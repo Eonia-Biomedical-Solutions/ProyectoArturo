@@ -26,7 +26,6 @@ const Login = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, correo, contrasena);
         const user = userCredential.user;
 
-        // Save additional user information (assuming proper security rules)
         await setDoc(doc(db, "usuarios", user.uid), {
           email: correo,
           rol: rol,
@@ -35,15 +34,15 @@ const Login = () => {
           fecha: fecha
         });
 
-        console.log("User created and data saved successfully!"); // Success message
+        console.log("User created and data saved successfully!"); 
       } catch (error) {
-        console.error("Error creating user:", error.message); // Log error for debugging
-        alert('Error al registrar usuario:', error.message); // User-friendly error message
+        console.error("Error creating user:", error.message); 
+        alert('Error al registrar usuario:', error.message); 
       }
     } else {
       try {
         await signInWithEmailAndPassword(auth, correo, contrasena);
-        console.log("User signed in successfully!"); // Success message
+        console.log("User signed in successfully!"); 
       } catch (error) {
         alert('Usuario o contraseña incorrectos');
       }
