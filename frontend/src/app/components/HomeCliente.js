@@ -204,6 +204,7 @@ const HomeCliente = ({ correousuario }) => {
                       <p className={styles.textocarrito2}>{item.autor}</p>
                     </div>
                     <p className={styles.textocarrito1}>${item.precio}</p>
+                    <p style={{ marginLeft: '5px' }}> x {item.cantidad}</p>
                   </div>
                 </li>
               ))}
